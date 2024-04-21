@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>计算器集合</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            overflow: hidden;
+        }
+        .calculator {
+            background: #fff;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .calculator h2 {
+            margin-bottom: 10px;
+        }
+        .calculator input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .calculator button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .calculator button:hover {
+            background-color: #0056b3;
+        }
+        .calculator p {
+            margin-top: 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="calculator">
+            <h2>曲率转换计算器</h2>
+            <input type="number" id="curvatureKValue" placeholder="请输入平均K值" step="any">
+            <button onclick="calculateCurvature()">计算</button>
+            <p id="curvatureResult">请计算</p>
+        </div>
+        <div class="calculator">
+            <h2>ROSEK2选片小工具</h2>
+            <input type="number" id="roseKValue" placeholder="请输入平均K值" step="any">
+            <select id="roseLensType">
+                <option value="ROSEK2">ROSE K2</option>
+                <option value="ROSEK2PG">ROSE K2 PG</option>
+                <option value="ROSEK2NC">ROSE K2 NC</option>
+                <option value="ROSEK2IC">ROSE K2 IC</option>
+            </select>
+            <button onclick="calculateRose()">计算</button>
+            <p id="roseResult">请计算</p>
+        </div>
+    </div>
+
+    <script>
+        function calculateCurvature() {
+            var kValue = document.getElementById('curvatureKValue').value;
+            var result = (337.5 / kValue).toFixed(2);
+            document.getElementById('curvatureResult').textContent = result + ' mm';
+        }
+
+        function calculateRose() {
+            var kValue = document.getElementById('roseKValue').value;
+            var lensType = document.getElementById('roseLensType').value;
+            var result;
+            if (lensType === 'ROSEK2') {
+                result = kValue >= 7.0 ? kValue - 0.2 : kValue;
+            } else if (lensType === 'ROSEK2PG') {
+                result = kValue - 0.3;
+            } else if (lensType === 'ROSEK2NC') {
+                result = kValue >= 6.0 ? kValue - 0.2 : kValue;
+            } else if (lensType === 'ROSEK2IC') {
+                result = kValue - 0.3;
+            }
+            document.getElementById('roseResult').textContent = result.toFixed(1) + ' mm';
+        }
+    </script>
+</body>
+</html>
